@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Widget Page</title>
+
+    <script src="https://link-to-your-payment-widget-script.js"></script>
+</head>
+<body>
+    <div id="widget"></div>
+
+    <script>
+        const widget = PaymentWidget.init({
+            apiKey: 'YOUR_API_KEY',
+            mode: 'embedded',
+            selector: '#widget',
+            payment: {
+                type: 'pay',
+                amount: 1.99,
+                currency: 'UAH'
+            }
+        });
+    </script>
+</body>
+</html>
