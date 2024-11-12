@@ -8,19 +8,34 @@
     <script src="https://gcdn.tranzzo.com/widget/payment-widget.js"></script>
 </head>
 <body>
-    <div id="widget"></div>
 
-    <script>
+<div>
+    <label>Ключ API: <input type="text" id="apiKey" /></label> По замовчуванню буде RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6 від проекту RS_Widget<br/>
+    <label>Валюта: <input type="text" id="currency" value="XTS" /></label><br/>
+    <label>Сума: <input type="number" id="amount" value="1" /></label><br/>
+    <button onclick="initWidget()">Ініціювати віджет</button>
+</div>
+
+<div id="widget"></div>
+
+<script>
+    function initWidget() {
+        const apiKey = document.getElementById('apiKey').value || "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6";
+        const currency = document.getElementById('currency').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+
         PaymentWidget.init({
-            apiKey: 'RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6',
+            apiKey: apiKey,
             mode: 'embedded',
             selector: '#widget',
             payment: {
                 type: 'pay',
-                amount: 1,
-                currency: 'UAH'
+                amount: amount,
+                currency: currency
             }
         });
-    </script>
+    }
+</script>
+
 </body>
 </html>
