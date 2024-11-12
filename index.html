@@ -11,11 +11,17 @@
 
 
 <div class="container">
+    <script>
+        document.getElementById('apiKey').value = "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6"
+    </script>
+
+
     <h1>Payment Widget</h1>
 
     <div class="mb-3 info-text">
-        По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget.
+        По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget
     </div>
+
 
     <form id="widgetForm">
         <div class="mb-3">
@@ -25,12 +31,16 @@
 
         <div class="mb-3">
             <label for="currency" class="form-label">Валюта:</label>
-            <input type="text" class="form-control" id="currency" value="XTS" placeholder="Введіть валюту">
+            <select class="form-select" id="currency">
+                <option value="UAH">UAH</option>
+                <option value="XTS">XTS</option>
+                <option value="USD">USD</option>
+            </select>
         </div>
 
         <div class="mb-3">
             <label for="amount" class="form-label">Сума:</label>
-            <input type="number" class="form-control" id="amount" value="1" placeholder="Введіть суму" min="0" step="0.01">
+            <input type="text" class="form-control" id="amount" value="1" placeholder="Введіть суму" min="0" step="0.01">
         </div>
 
         <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
@@ -43,7 +53,7 @@
 
 <script>
     function initWidget() {
-        const apiKey = document.getElementById('apiKey').value || "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6";
+        const apiKey = document.getElementById('apiKey').value;
         const currency = document.getElementById('currency').value;
         const amount = parseFloat(document.getElementById('amount').value);
 
