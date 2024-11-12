@@ -40,8 +40,16 @@
 </style>
 
 <div class="container">
+    <h1 class="mt-lg-4">Payment Widget</h1>
+
+    <div class="toggle-container">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="toggleMode" onclick="toggleInputMode()">
+            <label class="form-check-label" for="toggleMode">Playground Mode (JSON)</label>
+        </div>
+    </div>
+
     <div class="left-column">
-        <h1 class="mt-lg-4">Payment Widget</h1>
 
         <div class="mb-3 info-text">
             По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget.
@@ -72,17 +80,22 @@
                 <div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="widgetMode" id="modeEmbedded" value="embedded" checked>
-                        <label class="form-check-label" for="modeEmbedded">Вбудований (Embedded)</label>
+                        <label class="form-check-label" for="modeEmbedded">Embedded</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="widgetMode" id="modePopup" value="popup">
-                        <label class="form-check-label" for="modePopup">Вікно (Popup)</label>
+                        <label class="form-check-label" for="modePopup">Popup</label>
                     </div>
                 </div>
             </div>
 
             <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
         </form>
+    </div>
+
+    <div id="jsonInput" class="left-column">
+        <label for="jsonConfig" class="form-label">JSON Configuration:</label>
+        <textarea class="form-control" id="jsonConfig" rows="8" placeholder='{"apiKey": "...", "currency": "...", "amount": ..., "mode": "..."}'></textarea>
     </div>
 
     <!-- Right Column for Payment Widget -->
@@ -98,32 +111,55 @@
 </script>
 
 <script>
-    function initWidget() {
-        const apiKey = document.getElementById('apiKey').value;
-        const currency = document.getElementById('currency').value;
-        const amount = parseFloat(document.getElementById('amount').value);
+    function toggleInputMode() {
+        const isPlaygroundMode = document.getElementById('toggleMode').checked;
+        document.getElementById('simpleForm').style.display = isPlaygroundMode ? 'none' : 'block';
+        document.getElementById('jsonInput').style.display = isPlaygroundMode ? 'block' : 'none';
+    }
 
-        function logToVercel(message) {
-            fetch("/api/log", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message }),
-            }).catch((error) => console.error("Error sending log:", error));
+    function logToVercel(message) {
+        fetch("/api/log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
+        }).catch((error) => console.error("Error sending log:", error));
+    }
+
+    function initWidget() {
+        let config;
+        const isPlaygroundMode = document.getElementById('toggleMode').checked;
+
+        if(isPlaygroundMode){
+            try {
+                config = JSON.parse(document.getElementById('jsonConfig').value);
+            } catch (error) {
+                alert("Invalid JSON format. Please correct it.");
+                return;
+            }
+        }else{
+            const apiKey = document.getElementById('apiKey').value;
+            const currency = document.getElementById('currency').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const mode = document.querySelector('input[name="widgetMode"]:checked').value;
+
+            config = {
+                apiKey: apiKey,
+                mode: mode,
+                payment: {
+                    type: 'pay',
+                    amount: amount,
+                    currency: currency
+                }
+            };
         }
 
-        logToVercel({apiKey, currency, amount});
-
-        const mode = document.querySelector('input[name="widgetMode"]:checked').value;
+        logToVercel(config);
 
         PaymentWidget.init({
-            apiKey: apiKey,
-            mode: mode,
+            apiKey: config.apiKey,
+            mode: config.mode,
             selector: '#widget',
-            payment: {
-                type: 'pay',
-                amount: amount,
-                currency: currency
-            }
+            payment: config.payment
         }).on('widget.ready', function(data){
             logToVercel(data);
         }).on('widget.error', function(data){
@@ -134,6 +170,7 @@
             logToVercel(data);
         });
     }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
