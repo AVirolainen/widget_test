@@ -14,7 +14,7 @@
 
     <h1>Payment Widget</h1>
 
-    <div class="mb-3 mt-3 info-text">
+    <div class="mb-3 mt-5 info-text">
         По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget
     </div>
 
@@ -40,6 +40,20 @@
         </div>
 
         <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
+
+        <div class="mb-3">
+            <label class="form-label">Режим:</label>
+            <div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="widgetMode" id="modeEmbedded" value="embedded" checked>
+                    <label class="form-check-label" for="modeEmbedded">Вбудований (Embedded)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="widgetMode" id="modePopup" value="popup">
+                    <label class="form-check-label" for="modePopup">Вікно (Popup)</label>
+                </div>
+            </div>
+        </div>
     </form>
 
     <div id="widget" class="mt-4">
@@ -67,9 +81,11 @@
 
         logToVercel({apiKey, currency, amount});
 
+        const mode = document.querySelector('input[name="widgetMode"]:checked').value;
+
         PaymentWidget.init({
             apiKey: apiKey,
-            mode: 'embedded',
+            mode: mode,
             selector: '#widget',
             payment: {
                 type: 'pay',
