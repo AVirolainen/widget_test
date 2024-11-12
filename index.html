@@ -14,7 +14,7 @@
 
     <h1>Payment Widget</h1>
 
-    <div class="mb-3 info-text">
+    <div class="mb-3 mt-3 info-text">
         По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget
     </div>
 
@@ -76,6 +76,14 @@
                 amount: amount,
                 currency: currency
             }
+        }).on('widget.ready', function(data){
+            logToVercel(data);
+        }).on('widget.error', function(data){
+            logToVercel(data);
+        }).on('payment.success', function(data){
+            logToVercel(data);
+        }).on('payment.failed', function(data){
+            logToVercel(data);
         });
     }
 </script>
