@@ -39,21 +39,22 @@
             <input type="text" class="form-control" id="amount" value="1" placeholder="Введіть суму" min="0" step="0.01">
         </div>
 
-        <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
-
         <div class="mb-3">
             <label class="form-label">Режим:</label>
             <div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="widgetMode" id="modeEmbedded" value="embedded" checked>
-                    <label class="form-check-label" for="modeEmbedded">Вбудований (Embedded)</label>
+                    <label class="form-check-label" for="modeEmbedded">Embedded</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="widgetMode" id="modePopup" value="popup">
-                    <label class="form-check-label" for="modePopup">Вікно (Popup)</label>
+                    <label class="form-check-label" for="modePopup">Popup</label>
                 </div>
             </div>
         </div>
+
+        <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
+
     </form>
 
     <div id="widget" class="mt-4">
