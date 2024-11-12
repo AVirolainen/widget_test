@@ -36,21 +36,24 @@
         font-weight: bold;
         padding: 0.75rem;
     }
+    .json-input {
+        display: none;
+    }
 
 </style>
 
 <div class="container">
-    <h1 class="mt-lg-4">Payment Widget</h1>
-
-    <div class="toggle-container">
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="toggleMode" onclick="toggleInputMode()">
-            <label class="form-check-label" for="toggleMode">Playground Mode (JSON)</label>
-        </div>
-    </div>
-
     <div class="left-column">
+        <h1 class="mt-lg-4">Payment Widget</h1>
 
+        <div class="toggle-container">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="toggleMode" onclick="toggleInputMode()">
+                <label class="form-check-label" for="toggleMode">Playground Mode (JSON)</label>
+            </div>
+        </div>
+
+        <div id="simpleForm">
         <div class="mb-3 info-text">
             По замовчуванню ключ API буде "RHQXIF26A4VOBOZMO5E77EEF0FX0LLT5KTA6" від проекту RS_Widget.
         </div>
@@ -91,9 +94,10 @@
 
             <button type="button" class="btn btn-primary init-button" onclick="initWidget()">Ініціювати віджет</button>
         </form>
+        </div>
     </div>
 
-    <div id="jsonInput" class="left-column">
+    <div id="jsonInput" class="json-input">
         <label for="jsonConfig" class="form-label">JSON Configuration:</label>
         <textarea class="form-control" id="jsonConfig" rows="8" placeholder='{"apiKey": "...", "currency": "...", "amount": ..., "mode": "..."}'></textarea>
     </div>
