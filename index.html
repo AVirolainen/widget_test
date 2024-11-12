@@ -24,6 +24,8 @@
         const currency = document.getElementById('currency').value;
         const amount = parseFloat(document.getElementById('amount').value);
 
+        console.log({apiKey, currency, amount})
+
         PaymentWidget.init({
             apiKey: apiKey,
             mode: 'embedded',
