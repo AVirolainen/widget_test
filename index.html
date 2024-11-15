@@ -148,7 +148,7 @@
 
             config = {
                 apiKey: apiKey,
-                mode: mode,
+                mode: "embedded",
                 payment: {
                     type: 'pay',
                     amount: amount,
@@ -161,8 +161,8 @@
 
         PaymentWidget.init({
             apiKey: config.apiKey,
-            mode: config.mode,
-            selector: '#widget',
+            mode: "embedded",
+            selector: 'wwefwfef',
             payment: config.payment
         }).on('widget.ready', function(data){
             logToVercel(data);
